@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.citi.citiconnect/services/types/attachments/v1"
+           xmlns:citiConnect="http://com.citi.citiconnect/services/types/citiconnect/v1"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           version="1.0"
+           elementFormDefault="qualified"
+           targetNamespace="http://com.citi.citiconnect/services/types/attachments/v1">
+
+
+    <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
+                schemaLocation="CitiConnect.xsd"/>
+
+    <!-- ============================================================== -->
+
+    <xs:element name="statementRetrievalRequest" type="StatementRetrievalRequestType"/>
+    <xs:element name="statementRetrievalResponse" type="StatementRetrievalResponseType"/>
+
+    <!-- ============================================================== -->
+    <xs:complexType name="StatementRetrievalRequestType">
+        <xs:sequence>
+            <xs:element name="statementId" type="xsd:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        ID of statement to download.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- ============================================================== -->
+    <xs:complexType name="StatementRetrievalResponseType">
+        <xs:sequence>
+            <xs:element name="statementId" type="xsd:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        ID of statement attached.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fileCheckSum" type="xsd:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Contains sha512 hash of statement.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime"
+                        name="statementStream"
+                        ns1:expectedContentTypes="application/xop"
+                        type="xs:base64Binary">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Statement binary stream...</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- ============================================================== -->
+    <xs:simpleType name="FormatTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SWIFT_MT940"/>
+            <xs:enumeration value="CAMT_053_001_02"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- ============================================================== -->
+    <xs:element name="notEntitledToStatementRetrievalFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="statementNotReadyFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="statementNotFoundFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="statementEmptyFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

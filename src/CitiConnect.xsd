@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.citi.citiconnect/services/types/citiconnect/v1"
+           xmlns:oauthtoken="http://com.citi.citiconnect/services/types/oauthtoken/v1"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           version="1.0"
+           elementFormDefault="qualified"
+           targetNamespace="http://com.citi.citiconnect/services/types/citiconnect/v1">
+
+    <xsd:import namespace="http://com.citi.citiconnect/services/types/oauthtoken/v1"
+                schemaLocation="OAuthToken.xsd"/>
+
+    <!-- ============================================================== -->
+    <xs:element name="correlationId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Client must generate unique correlationId for tracing purposes (UUID would
+                suffice)
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <!-- ============================================================== -->
+    <xs:element name="logInRequest" type="LogInRequestType"/>
+    <xs:element name="logInResponse" type="LogInResponseType"/>
+    
+
+    <!-- ============================================================== -->
+    <xs:element name="paymentInitiationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="payloadType" type="PayloadTypeEnum">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Indicates type of next element 'payload'</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                
+                <xs:element name="payloadHeaders" type="PayloadHeadersType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Contains name value/pair header information pertaining to payment</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="payload" type="xs:base64Binary">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Contains payload ...</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="PayloadHeadersType">
+        <xs:sequence>
+            <xs:element name="payloadHeader" type="PayloadHeaderType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains name value/pair header information pertaining to payment</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PayloadHeaderType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates header name</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="value" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates header value</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="paymentInitiationResponse" type="xs:base64Binary">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Contains response ...</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- ============================================================== -->
+    <xs:element name="logOutRequest" type="LogOutRequestType"/>
+    <xs:element name="logOutResponse" type="LogOutResponseType"/>
+
+    <!-- ============================================================== -->
+    <xs:complexType name="LogInRequestType">
+        <xs:sequence>
+            <xs:element name="certSerialNo" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains serial number of client's cert.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="certDistinguishedName" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains distinguished name (DN) of client's cert</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sourceSystemUserName" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains name of user that is logged in. (Used for tracing
+                        purposes).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sourceSystemClientName" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains name of client(company) associated with logged in user.
+                        (Used for tracing purposes).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="oauthtoken:oAuthToken">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains the contents of the OAuth token 'as is' from calling client (if applicable)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="LogInResponseType">
+        <xs:sequence>
+            <xs:element name="entitlements" type="EntitlementsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains list of entitlements for client.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EntitlementsType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entitlement" type="EntitlementType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EntitlementType">
+        <xs:sequence>
+            <xs:element name="resourceId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">TODO: Need to ask Eamonn about what entitlements will be applicable
+                        for CitiConnect.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="actionId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">TODO: Need to ask Eamonn about the meaning of this.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="granted" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">True implies entitlement is granted, false implies it is denied.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- ============================================================== -->
+    <xs:complexType name="LogOutRequestType">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LogOutResponseType">
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- ============================================================== -->
+    <xs:element name="unknownUserFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="paymentNotFoundFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="failedToProcessPaymentDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="unsupportedPaymentMethodTypeDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="debtorAccountNotFoundDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="beneficiaryNotFoundDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="accessDeniedFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="invalidOAuthTokenFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="faultDetail" type="faultDetailType"/>
+    <xs:complexType name="faultDetailType">
+        <xs:sequence>
+            <xs:element name="correlationId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains correlationId of request that caused fault.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="errorCode" type="ErrorCodeTypeEnum">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Useful for clients to programtically figure out what happened!
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="errorMsg" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Contains verbose error message of what happened.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="errorSource" type="ErrorSourceTypeEnum">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Useful for debugging purposes to indicate where fault originated.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ErrorCodeTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="INTERNAL_ERROR"/>
+            <xs:enumeration value="UNKNOWN_PAYLOAD_TYPE"/>
+            <xs:enumeration value="UNKNOWN_USER"/>
+            <xs:enumeration value="XML_SCHEMA_VALIDATION_ERROR"/>
+            <xs:enumeration value="PREVIOUS_STATEMENT_IS_STILL_BEEN_PROCESSED"/>
+            <xs:enumeration value="STATEMENT_ACCOUNT_MANDATORY"/>
+            <xs:enumeration value="STATEMENT_FROM_DATE_GREATER_THAN_TO_DATE"/>
+            <xs:enumeration value="NOT_ENTITLED_TO_DOWNLOAD_STATEMENT"/>
+            <xs:enumeration value="STATEMENT_NOT_READY"/>
+            <xs:enumeration value="STATEMENT_NOT_FOUND"/>
+            <xs:enumeration value="STATEMENT_EMPTY"/>
+            <xs:enumeration value="STATEMENT_FILE_SIZE_EXCEEDED"/>
+            <xs:enumeration value="BALANCE_DATES_GREATER_THAN_180_DAYS_FROM_CURRENT_DATE"/>
+            <xs:enumeration value="BALANCE_ACCOUNT_OR_BRANCH_NO_MANDATORY"/>
+            <xs:enumeration value="BALANCE_FROM_DATE_GREATER_THAN_TO_DATE"/>
+            <xs:enumeration value="ACCESS_DENIED"/>
+            <xs:enumeration value="INVALID_MESSAGE"/>
+            <xs:enumeration value="INVALID_OAUTH_TOKEN"/>
+            <xs:enumeration value="UNAUTHORIZED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ErrorSourceTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CLASSIC"/>
+            <xs:enumeration value="BE_SERVICES"/>
+            <xs:enumeration value="CITI_CONNECT_SERVICE"/>
+            <xs:enumeration value="CITI_CONNECT_FILE_SERVICE"/>
+            <xs:enumeration value="CITI_CONNECT_SWIFT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PayloadTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="urn:iso:std:iso:20022:tech:xsd:pain.001.001.02">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates PAIN 001 version 2 messages.
+                        Actual URN is used to avoid ambiguity here on type.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates PAIN 001 version 3 messages.
+                        Actual URN is used to avoid ambiguity here on type.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates PAIN 008 version 2 messages.
+                        Actual URN is used to avoid ambiguity here on type.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MT101">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates MT101 messages.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tech:xsd:custom.virtual.wallet">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates VirtualWallet Beneficiary Details.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="base64Payload" type="xs:base64Binary"/>
+
+    <!-- ============================================================== -->
+    <xs:simpleType name="Max35Text">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ActiveOrHistoricCurrencyAndAmount">
+        <xs:simpleContent>
+            <xs:extension base="ActiveOrHistoricCurrencyAndAmount_SimpleType">
+                <xs:attribute name="Ccy" type="ActiveOrHistoricCurrencyCode" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ActiveOrHistoricCurrencyAndAmount_SimpleType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:fractionDigits value="5"/>
+            <xs:totalDigits value="18"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ActiveOrHistoricCurrencyCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{3,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

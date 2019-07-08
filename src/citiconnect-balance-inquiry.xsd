@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.citi.citiconnect/services/types/inquiries/balance/v1"
+           xmlns:camt05200102="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02"
+           xmlns:citiConnect="http://com.citi.citiconnect/services/types/citiconnect/v1"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           version="1.0"
+           elementFormDefault="qualified"
+           targetNamespace="http://com.citi.citiconnect/services/types/inquiries/balance/v1">
+
+    <xsd:import namespace="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02"
+                schemaLocation="/citiconnect/schema/iso/camt.052.001.02.xsd"/>
+    <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
+                schemaLocation="citiconnect.xsd"/>
+
+    <!-- ============================================================== -->
+    <xs:element name="balanceInquiryRequest" type="BalanceInquiryRequestType"/>
+    <xs:element name="balanceInquiryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="camt05200102:Document">
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ============================================================== -->
+    <xs:complexType name="BalanceInquiryRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The Balance Summary shows a summary of all accounts of a defined branch with their ledger and available
+                balances. All data is as of the last available day of data. For today's date the inquiry shows the
+                current ledger balance and closing available balance, but for a previous date, it shows the opening
+                available balance and the opening ledger balance. Totals will be provided both by Branch and By
+                Currency.
+                Totals will be provided for all four balances, for each Statement Date requested in Base Currency.
+                For example, if a User has five accounts in five different currencies, and requests four statement
+                dates,
+                the Totals Dialog (invoked from the Button) will show the four balances for each statement date in
+                the selected Base Currency. The user must select a Base Currency (required).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="accountNumber" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies account(s) to run balance enquiry on.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="branchNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies Branch Number to run balance enquiry.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="baseCurrency" type="citiConnect:ActiveOrHistoricCurrencyCode" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        TODO: Add comment
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="accountCurrency" type="citiConnect:ActiveOrHistoricCurrencyCode" minOccurs="0"
+                        maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        TODO: Add comment
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fromDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies the 'from' date for the balance enquiry. In case of an intraday inquiry, the From and
+                        To dates will be the same. If no values are sent, then it’s defaulted to the current date by
+                        API in both the fields.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="toDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies the 'to' date for the balance enquiry. In case of an intraday inquiry, the From and
+                        To dates will be the same. If no values are sent, then it’s defaulted to the current date by
+                        API in both the fields.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ============================================================== -->
+    <xs:element name="datesOlderThan180DaysFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="accountNumberOrBranchNumberMandatoryFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="fromDateGreaterThanToDateFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

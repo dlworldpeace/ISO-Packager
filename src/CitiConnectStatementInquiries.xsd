@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.citi.citiconnect/services/types/inquiries/statement/v1"
+           xmlns:citiConnect="http://com.citi.citiconnect/services/types/citiconnect/v1"
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           version="1.0"
+           elementFormDefault="qualified"
+           targetNamespace="http://com.citi.citiconnect/services/types/inquiries/statement/v1">
+
+    <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
+                schemaLocation="CitiConnect.xsd"/>
+
+
+    <!-- ============================================================== -->
+    <xs:element name="statementInitiationRequest" type="StatementInitiationRequestType"/>
+    <xs:element name="statementInitiationResponse" type="StatementInitiationResponseType"/>
+
+
+    <!-- ============================================================== -->
+    <xs:complexType name="StatementInitiationRequestType">
+        <xs:sequence>
+            <xs:element name="accountNumber" type="xsd:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        TODO: Need to review type here.
+                        Specifies account(s) to run statement enquiry on.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="formatName" type="FormatTypeEnum">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specified format of statement to be generated.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fromDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies the 'from' date for the statement enquiry.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="toDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Specifies the 'to' date for the statement enquiry.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="strLibrayName" type="xsd:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						Specifies the 'to' LibrayName for the statement enquiry.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ============================================================== -->
+    <xs:complexType name="StatementInitiationResponseType">
+        <xs:sequence>
+            <xs:element name="statementId" type="xsd:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Unique ID for newly generated statement.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ============================================================== -->
+    <xs:simpleType name="FormatTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SWIFT_MT940"/>
+            <xs:enumeration value="CAMT_053_001_02"/>
+            <xs:enumeration value="SWIFT_MT942"/>
+            <xs:enumeration value="CAMT_052_001_02"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- ============================================================== -->
+    <xs:element name="previousStatementIsStillBeenProcessedFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="accountNumberMandatoryFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="fromDateGreaterThanToDateFaultDetail">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="citiConnect:faultDetailType"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

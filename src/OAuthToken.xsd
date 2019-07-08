@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.citi.citiconnect/services/types/oauthtoken/v1"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="http://com.citi.citiconnect/services/types/oauthtoken/v1">
+
+    <xs:element name="oAuthToken" type="OAuthTokenType"/>
+
+    <xs:complexType name="OAuthTokenType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="grantType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Always set to 'client_credentials'.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element type="xs:string" name="scope">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates URL segment pertaining to access request e.g. '/payments'
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element type="SourceApplicationTypeEnum" name="sourceApplication" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates type of calling application. (Used to route payments and affect enrichment)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element type="xs:string" name="merchantId" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates ID of merchant (used by SSG gateway to determine what
+                        cert to use for encrypting responses)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element type="userDetailsType" name="userDetails" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Identifies user of this API e.g. user that initiated payment.
+                        This field is not mandatory as some some applications like TWS use SSL certs to identify
+                        users...
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="userDetailsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="userId">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates ID of user.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element type="UserIdTypeTypeEnum" name="userIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates type of userId field.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="UserIdTypeTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SAFEWORD">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates that userId value is a SafeWord Id (CSA_XXXX).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SourceApplicationTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TWS">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates source application is a Treasury Work Station.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CCC">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates source application is a Citi Connect Cash client
+                        application.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CCF">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates source application wants to use the CCF route.
+                        The long term plan is to remove this field altogether from the API when BE supports all payments.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BESERVICE">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Indicates source application wants to use the BESERVICE route.
+                        This is currently used only for internal testing and will be removed at some point in the future.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
