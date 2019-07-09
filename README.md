@@ -19,8 +19,11 @@ On unsuccessful install, you can make sure you have **java** installed in your e
 
 __Create JAR from .xsd files__
 
-1. Clone this repository using `git clone https://github.com/dlworldpeace/ISO-Packager.git` at yout preferred storage location.
-2. Add your new **.xsd** files into the `src/` directory along all other existing **.xsd** files and `main/`.
+1. Clone this repository using `git clone https://github.com/dlworldpeace/ISO-Packager.git` at yout preferred storage location. 
+```
+Note: You can skip step 2 and 3 if you are not adding new .xsd files
+```
+2.  Add your new **.xsd** files into the `src/` directory along all other existing **.xsd** files and `main/`.
 3. If your newly added .xsd files have other imports, ensure these imports exist in the same directory and their `"schemaLocation"` of the import fields are updated accordingly, for example in `citiBalanceInquiry.xsd`
 
 change from
@@ -36,9 +39,11 @@ to the following
 ```
 because the the required import file `camt05200102.xsd` is in the same directory.
 
-4. From the `src` level directory, run command `parse_xsd.sh` (Make sure you have set up your python environment) to generate all the **.java** from **.xsd** at `src/main/java/deskera/fintech/` and then export the entire project from `deskera.fintech.*` as a **.jar** package.
+4. From the `src` level directory, run `chomd +x parse_xsd.sh` to give the shell script executable permission.
 
-5. Retrieve the generated **.jar** from `target/deskera-fintech-1.0.jar`.
+5. In the same directory, run command `parse_xsd.sh` (for WINDOWS) or `./parse_xsd.sh`(for LINUX) to generate all the **.java** from **.xsd** at `src/main/java/deskera/fintech/` and thereafter export all of them as a **.jar** package.
+
+6. Retrieve the generated **.jar** from `target/deskera-fintech-1.0.jar`.
 
 ***
 
