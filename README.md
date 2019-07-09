@@ -4,7 +4,7 @@ This is a simple CLI tool to export several **.xsd** generated ISOXML packages i
 
 __Pre-setup__
 
-For both Linux and Windows users, run command line `xjc -version` to check if you have **xjc** installed.
+For both Linux and Windows users (Windows Linux Subsystem not supportted), run command line `xjc -version` to check if you have **xjc** installed.
 
 On successful install, you will see
 
@@ -13,18 +13,7 @@ xjc 2.3.0-b170531.0717
 ```
 and can skip this section.
 
-On unsuccessful install, you can follow these steps:
-1. Make sure you have **java** installed in your environment, this can be checked using command line `java -version`.
-2. Find out directory of your default jdk using command line `whereis java`. you might see
-```
-java: /usr/bin/java /usr/share/java /mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath_target_482333187/java.exe /mnt/c/Program Files/Java/jdk-9.0.4/bin/java.dll /mnt/c/Program Files/Java/jdk-9.0.4/bin/java.exe /mnt/c/ProgramData/Oracle/Java/javapath_target_529715750/java.exe /usr/share/man/man1/java.1.gz
-```
-3. Create alias to your java's **xjc** program using the command line `alias xjc="<your xjc.exe directory>"`, e.g. 
-```
-alias xjc="/mnt/c/Program\ Files/Java/jdk-9.0.4/bin/xjc.exe"
-```
-4. If you want to add the alias to your terminal permenantly, follow this  [tutorial](https://www.hostingadvice.com/how-to/set-command-aliases-linuxubuntudebian/)
-5. Check if **xjc** command works using command line `xjc -version` again.
+On unsuccessful install, you can make sure you have **java** installed in your environment, this can be checked using command line `java -version`. **xjc.exe** comes as part of your jdk.
 
 ***
 
