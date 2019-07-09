@@ -8,7 +8,7 @@
            targetNamespace="http://com.citi.citiconnect/services/types/inquiries/statement/v1">
 
     <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
-                schemaLocation="citi.xsd"/>
+                schemaLocation="citiConnect.xsd"/>
 
 
     <!-- ============================================================== -->

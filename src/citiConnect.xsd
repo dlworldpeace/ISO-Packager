@@ -8,7 +8,7 @@
            targetNamespace="http://com.citi.citiconnect/services/types/citiconnect/v1">
 
     <xsd:import namespace="http://com.citi.citiconnect/services/types/oauthtoken/v1"
-                schemaLocation="citi-authentication.xsd"/>
+                schemaLocation="citiAuthentication.xsd"/>
 
     <!-- ============================================================== -->
     <xs:element name="correlationId" type="xs:string">
