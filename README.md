@@ -1,5 +1,7 @@
 This is a simple CLI tool to export several **.xsd** generated ISOXML packages into one **.jar** file for importing into your other projects.
 
+***
+
 __Pre-setup__
 
 For both Linux and Windows users, run command line `xjc -version` to check if you have **xjc** installed.
@@ -24,6 +26,8 @@ alias xjc="/mnt/c/Program\ Files/Java/jdk-9.0.4/bin/xjc.exe"
 4. If you want to add the alias to your terminal permenantly, follow this  [tutorial](https://www.hostingadvice.com/how-to/set-command-aliases-linuxubuntudebian/)
 5. Check if **xjc** command works using command line `xjc -version` again.
 
+***
+
 __Create JAR from .xsd files__
 
 1. Clone this repository using `git clone https://github.com/dlworldpeace/ISO-Packager.git` at yout preferred storage location.
@@ -47,9 +51,13 @@ because the the required import file `camt.052.001.02.xsd` is in the same direct
 
 5. Retrieve the generated **.jar** from `target/deskera-fintech-1.0.jar`.
 
+***
+
 __To update JAR name or version__
 
 If you want to change the name and version of the `.jar` exported, you can change them at `<artifactId>deskera-fintech</artifactId>` and `<version>1.0</version>` of `pom.xml` respectively before step 4 and 5.
+
+***
 
 __To learn more__
 
