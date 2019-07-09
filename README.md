@@ -6,14 +6,14 @@ __Pre-setup__
 
 For both Linux and Windows users (Windows Linux Subsystem not supportted), run command line `xjc -version` to check if you have **xjc** installed.
 
-On successful install, you will see
+On successful installation, you will see
 
 ```
 xjc 2.3.0-b170531.0717
 ```
 and can skip this section.
 
-On unsuccessful install, you can make sure you have **java** installed in your environment, this can be checked using command line `java -version`. **xjc.exe** comes as part of your jdk.
+On unsuccessful installation, you can make sure you have **java** installed in your environment, this can be checked using command line `java -version`. **xjc.exe** comes as part of your jdk.
 
 ***
 
