@@ -32,20 +32,20 @@ __Create JAR from .xsd files__
 
 1. Clone this repository using `git clone https://github.com/dlworldpeace/ISO-Packager.git` at yout preferred storage location.
 2. Add your new **.xsd** files into the `src/` directory along all other existing **.xsd** files and `main/`.
-3. If your newly added .xsd files have other imports, ensure these imports exist in the same directory and their `"schemaLocation"` of the import fields are updated accordingly, for example in `citiconnect-balance-inquiry.xsd`
+3. If your newly added .xsd files have other imports, ensure these imports exist in the same directory and their `"schemaLocation"` of the import fields are updated accordingly, for example in `citiBalanceInquiry.xsd`
 
 change from
 
 ```
    <xsd:import namespace="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02"
-                schemaLocation="citiconnect/iso/camt.052.001.02.xsd"/>
+                schemaLocation="citiconnect/iso/camt05200102.xsd"/>
 ```
 to the following
 ```
    <xsd:import namespace="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02"
-                schemaLocation="camt.052.001.02.xsd"/>
+                schemaLocation="camt05200102.xsd"/>
 ```
-because the the required import file `camt.052.001.02.xsd` is in the same directory.
+because the the required import file `camt05200102.xsd` is in the same directory.
 
 4. From the `src` level directory, run command `parse_xsd.sh` (Make sure you have set up your python environment) to generate all the **.java** from **.xsd** at `src/main/java/deskera/fintech/` and then export the entire project from `deskera.fintech.*` as a **.jar** package.
 
@@ -55,7 +55,7 @@ because the the required import file `camt.052.001.02.xsd` is in the same direct
 
 __To update JAR name or version__
 
-If you want to change the name and version of the `.jar` exported, you can change them at `<artifactId>deskera-fintech</artifactId>` and `<version>1.0</version>` of `pom.xml` respectively before step 4 and 5.
+If you want to change the name and version of the `.jar` exported, you can change them at `<artifactId>deskera-fintech</artifactId>` and `<version>1.0</version>` of `pom.xml` respectively before step 4 and 5 of **Create JAR from .xsd files**.
 
 ***
 
