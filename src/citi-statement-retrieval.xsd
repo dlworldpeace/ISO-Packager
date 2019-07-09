@@ -9,7 +9,7 @@
 
 
     <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
-                schemaLocation="CitiConnect.xsd"/>
+                schemaLocation="citi.xsd"/>
 
     <!-- ============================================================== -->
 

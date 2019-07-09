@@ -9,9 +9,9 @@
            targetNamespace="http://com.citi.citiconnect/services/types/inquiries/balance/v1">
 
     <xsd:import namespace="urn:iso:std:iso:20022:tech:xsd:camt.052.001.02"
-                schemaLocation="/citiconnect/schema/iso/camt.052.001.02.xsd"/>
+                schemaLocation="camt.052.001.02.xsd"/>
     <xsd:import namespace="http://com.citi.citiconnect/services/types/citiconnect/v1"
-                schemaLocation="citiconnect.xsd"/>
+                schemaLocation="citi.xsd"/>
 
     <!-- ============================================================== -->
     <xs:element name="balanceInquiryRequest" type="BalanceInquiryRequestType"/>
