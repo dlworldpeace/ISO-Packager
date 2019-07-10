@@ -4,16 +4,30 @@ This is a simple CLI tool to export several **.xsd** generated ISOXML packages i
 
 __Pre-setup__
 
-For both Linux and Windows users (Windows Linux Subsystem not supportted), run command line `xjc -version` to check if you have **xjc** installed.
+1. For both LINUX and WINDOWS users (Windows Linux Subsystem not supportted), run command line `xjc -version` to check if you have **xjc** installed.
 
 On successful installation, you will see
 
 ```
 xjc 2.3.0-b170531.0717
 ```
+
+On unsuccessful installation, you can make sure you have **Java** installed in your environment, this can be checked using command line `java -version`. **xjc.exe** comes as part of your jdk. (For WINDOWS user, remember to add path in system environment)
+
+2. run command line `mvn -version` to check if you have **Apache Maven** installed.
+
+On successful installation, you will see
+
+```
+Apache Maven 3.6.1 (d66c9c0b3152b2e69ee9bac180bb8fcc8e6af555; 2019-04-05T03:00:29+08:00)
+Maven home: D:\apache-maven-3.6.1\bin\..
+Java version: 9.0.4, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-9.0.4
+Default locale: en_SG, platform encoding: GBK
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+```
 and can skip this section.
 
-On unsuccessful installation, you can make sure you have **java** installed in your environment, this can be checked using command line `java -version`. **xjc.exe** comes as part of your jdk.
+On unsuccessful installation, you can follow [here](https://www.baeldung.com/install-maven-on-windows-linux-mac) to install Maven on WINDOWS or LINUX.
 
 ***
 
