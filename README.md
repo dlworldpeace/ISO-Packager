@@ -53,9 +53,14 @@ to the following
 ```
 because the the required import file `camt05200102.xsd` is in the same directory.
 
+```
+Note: You can skip step 4 if you use WINDOWS system
+```
+
 4. From the `src` level directory, run `chmod +x parse_xsd.sh` to give the shell script executable permission.
 
-5. In the same directory, run command `parse_xsd.sh` (for WINDOWS) or `./parse_xsd.sh`(for LINUX) to generate all the **.java** from **.xsd** at `src/main/java/deskera/fintech/` and thereafter export all of them as a **.jar** package.
+5. From the same directory as step 4, run command `parse_xsd.sh` (for WINDOWS) or `./parse_xsd.sh`(for LINUX). 
+This generates all the **.java** from **.xsd** at `src/main/java/deskera/fintech/` and thereafter exports all of them as a **.jar** package.
 
 6. Retrieve the generated **.jar** from `target/deskera-fintech-1.0.jar`.
 
